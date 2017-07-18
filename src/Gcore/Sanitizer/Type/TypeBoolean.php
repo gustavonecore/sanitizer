@@ -1,14 +1,13 @@
 <?php
 
-namespace Gcore\Sanitizer;
+namespace Gcore\Sanitizer\Type;
 
-use Gcore\Sanitizer\TypeString;
-use Gcore\Sanitizer\TypeInterface;
+use Gcore\Sanitizer\Type\TypeInterface;
 
 /**
  * Class to sanitize boolean data
  */
-class TypeBoolean implements TyeInterface
+class TypeBoolean implements TypeInterface
 {
 	/**
 	 * {@inheritDoc}

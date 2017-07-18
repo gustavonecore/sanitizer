@@ -1,16 +1,15 @@
 <?php
 
-namespace Gcore\Sanitizer;
+namespace Gcore\Sanitizer\Type;
 
 use DateTimeInterface;
 use DateTimeImmutable;
-use Gcore\Sanitizer\TypeString;
-use Gcore\Sanitizer\TypeInterface;
+use Gcore\Sanitizer\Type\TypeInterface;
 
 /**
  * Class to sanitize array data
  */
-class TypeDatetime implements TyeInterface
+class TypeDatetime implements TypeInterface
 {
 	/**
 	 * {@inheritDoc}

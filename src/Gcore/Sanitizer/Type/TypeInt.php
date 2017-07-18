@@ -1,13 +1,13 @@
 <?php
 
-namespace Gcore\Sanitizer;
+namespace Gcore\Sanitizer\Type;
 
-use Gcore\Sanitizer\TypeInterface;
+use Gcore\Sanitizer\Type\TypeInterface;
 
 /**
  * Class to sanitize integer data
  */
-class TypeInt implements TyeInterface
+class TypeInt implements TypeInterface
 {
 	/**
 	 * {@inheritDoc}

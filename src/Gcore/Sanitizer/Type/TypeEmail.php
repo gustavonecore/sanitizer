@@ -1,14 +1,14 @@
 <?php
 
-namespace Gcore\Sanitizer;
+namespace Gcore\Sanitizer\Type;
 
-use Gcore\Sanitizer\TypeString;
-use Gcore\Sanitizer\TypeInterface;
+use Gcore\Sanitizer\Type\TypeString;
+use Gcore\Sanitizer\Type\TypeInterface;
 
 /**
  * Class to sanitize email data
  */
-class TypeEmail implements TyeInterface
+class TypeEmail implements TypeInterface
 {
 	/**
 	 * {@inheritDoc}
