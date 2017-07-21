@@ -1,5 +1,5 @@
 {
-	"name": "gustavonecore/sanitizer",
+	"name": "gustavonecore/php-sanitizer",
 	"description": "PHP data sanitizer",
 	"type": "library",
 	"license": "MIT",
