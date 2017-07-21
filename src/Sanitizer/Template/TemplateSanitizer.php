@@ -1,31 +1,46 @@
-<?php namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Template;
 
-use Gcore\Sanitizer\Type\TypeInterface;
-use Gcore\Sanitizer\Type\TypeInt;
-use Gcore\Sanitizer\Type\TypeString;
+use Gcore\Sanitizer\Template\TemplateInterface;
 use Gcore\Sanitizer\Type\TypeArray;
 use Gcore\Sanitizer\Type\TypeArrayMap;
 use Gcore\Sanitizer\Type\TypeBoolean;
 use Gcore\Sanitizer\Type\TypeDatetime;
 use Gcore\Sanitizer\Type\TypeDouble;
 use Gcore\Sanitizer\Type\TypeEmail;
+use Gcore\Sanitizer\Type\TypeInterface;
+use Gcore\Sanitizer\Type\TypeInt;
+use Gcore\Sanitizer\Type\TypeString;
 use InvalidArgumentException;
 
 /**
  * Class to sanitize array data
  */
-class TypeTemplate implements TypeInterface
+class TemplateSanitizer implements TypeInterface, TemplateInterface
 {
+	/**
+	 * @var  array  Template
+	 */
 	protected $template;
+
+	/**
+	 * @var  array  Generated array of sanitizers from the initial template
+	 */
 	protected $templateSanitizer;
 
+	/**
+	 * Constructs the Template
+	 * @param  array  $template   Template
+	 */
 	public function __construct(array $template)
 	{
 		$this->template = $template;
 		$this->templateSanitizer = $this->initSanitizers($template);
 	}
 
-	private function getType($rule, string $fieldName = '') : TypeInterface
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getType($rule, string $fieldName = '') : TypeInterface
 	{
 		$type = null;
 
@@ -69,37 +84,19 @@ class TypeTemplate implements TypeInterface
 			$type = new TypeArrayMap($cleanSanitizers);
 			$type = $isList ? new TypeArray($type) : $type;
 		}
-		else
-		{
-			throw new InvalidArgumentException('Invalid sanitizer type');
-		}
 
 		if ($type === null)
 		{
-			throw new InvalidArgumentException('Sanitizer was not created properly');
+			throw new InvalidArgumentException('Invalid sanitizer type/rule');
 		}
 
 		return $type;
 	}
 
-	/*
-		$template = new Sanitizer([
-			'field1' => '!int', // required field
-			'field2' => [
-				'foo' => 'string',
-				'bar' => '!bool',
-				'var' => 'int',
-			],
-			'field3' => 'int[]',
-			'field4' => 'string[]',
-			'field5[]' => [
-				'foo' => 'string',
-				'bar' => '!bool',
-				'var' => 'int',
-			],
-		]);
-	*/
-	private function initSanitizers(array $template) : array
+	/**
+	 * {@inheritDoc}
+	 */
+	public function initSanitizers(array $template) : array
 	{
 		$templateSanitizer = [];
 
@@ -116,24 +113,6 @@ class TypeTemplate implements TypeInterface
 	/**
 	 * {@inheritDoc}
 	 */
-
-	 /*
-		$values = [
-			'field1' => 10,
-			'field2' => [
-				'foo' => 'test string',
-				'bar' => true,
-				'var' => 100,
-			],
-			'field3' => [],
-			'field4' => 'string[]',
-			'field5[]' => [
-				'foo' => 'string',
-				'bar' => '!bool',
-				'var' => 'int',
-			],
-		]);
-	*/
 	public function sanitize($values) : array
 	{
 		if (!is_array($values))

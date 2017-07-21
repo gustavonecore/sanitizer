@@ -4,7 +4,7 @@
 	"type": "library",
 	"license": "MIT",
 	"authors": [
-		{ "name": "Gustavo Delgado" }
+		{ "name": "Gustavo Delgado R.", "email":"gustavo.uach@gmail.com" }
 	],
 	"require": {
 		"php": ">=7.0"
