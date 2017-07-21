@@ -12,14 +12,14 @@ class TypeArray implements TypeInterface
 {
 	protected $typeItem;
 
-	public function __contruct(TypeInterface $typeItem)
+	public function __construct(TypeInterface $typeItem)
 	{
 		$this->typeItem = $typeItem;
 	}
 	/**
 	 * {@inheritDoc}
 	 */
-	public function sanitize(array $values) : array
+	public function sanitize($values) : array
 	{
 		return array_map(function($value)
 		{
