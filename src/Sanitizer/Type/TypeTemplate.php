@@ -145,7 +145,7 @@ class TypeTemplate implements TypeInterface
 
 		foreach ($this->templateSanitizer as $key => $sanitizer)
 		{
-			$output[$key] = isset($key, $values) ? $sanitizer->sanitize($values[$key]) : null;
+			$output[$key] = array_key_exists($key, $values) ? $sanitizer->sanitize($values[$key]) : null;
 		}
 
 		return $output;

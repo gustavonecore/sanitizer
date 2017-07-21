@@ -27,7 +27,7 @@ class TypeDouble implements TypeInterface
 		{
 			$test = preg_replace( '/[^0-9]/', '', $value);
 
-			if ($test !== '' && is_double($test))
+			if ($test !== '' && is_double(doubleval($test)))
 			{
 				return $test;
 			}
