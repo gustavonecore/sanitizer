@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 use DateTimeInterface;
 use DateTimeImmutable;

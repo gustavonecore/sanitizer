@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 use Gcore\Sanitizer\Type\TypeString;
 use Gcore\Sanitizer\Type\TypeInterface;

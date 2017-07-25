@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 /**
  * Interface to define the strategy for every sanitizer

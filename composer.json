@@ -10,11 +10,15 @@
 		"php": ">=7.0"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "^5.0"
+		"phpunit/phpunit": "^5.0",
+		"phpmd/phpmd" : "1.5.*",
+		"phploc/phploc": "*",
+		"sebastian/phpcpd": "*"
 	},
 	"autoload": {
 		"psr-4": {
-			"Gcore\\": "src/"
+			"Gcore\\": "src/",
+			"Test\\": "tests/"
 		}
 	},
 	"extra": {

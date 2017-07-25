@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 use Gcore\Sanitizer\Type\TypeInterface;
 use InvalidArgumentException;
@@ -12,10 +10,15 @@ class TypeArray implements TypeInterface
 {
 	protected $typeItem;
 
+	/**
+	 * Construct the sanitizer
+	 * @param  \Gcore\Sanitizer\Type\TypeInterface   $typeItem   Type item
+	 */
 	public function __construct(TypeInterface $typeItem)
 	{
 		$this->typeItem = $typeItem;
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -25,5 +28,10 @@ class TypeArray implements TypeInterface
 		{
 			return $this->typeItem->sanitize($value);
 		}, $values);
+	}
+
+	public function getTypeItem() : TypeInterface
+	{
+		return $this->typeItem;
 	}
 }

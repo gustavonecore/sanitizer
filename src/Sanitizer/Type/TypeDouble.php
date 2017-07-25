@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 use Gcore\Sanitizer\Type\TypeString;
 use Gcore\Sanitizer\Type\TypeInterface;
@@ -29,7 +27,7 @@ class TypeDouble implements TypeInterface
 
 			if ($test !== '' && is_double(doubleval($test)))
 			{
-				return $test;
+				return doubleval($test);
 			}
 		}
 

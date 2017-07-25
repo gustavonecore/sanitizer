@@ -1,6 +1,4 @@
-<?php
-
-namespace Gcore\Sanitizer\Type;
+<?php namespace Gcore\Sanitizer\Type;
 
 use Gcore\Sanitizer\Type\TypeInterface;
 use InvalidArgumentException;
@@ -11,6 +9,9 @@ use RuntimeException;
  */
 class TypeArrayMap implements TypeInterface
 {
+	/**
+	 * @var  array  Sanitizers
+	 */
 	protected $sanitizers;
 
 	/**
@@ -45,5 +46,14 @@ class TypeArrayMap implements TypeInterface
 		}
 
 		return $sanitized;
+	}
+
+	/**
+	 * Get the sanitizers
+	 * @return array
+	 */
+	public function getSanitizers() : array
+	{
+		return $this->sanitizers;
 	}
 }
