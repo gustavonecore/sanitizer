@@ -17,7 +17,7 @@ class TypeIntTest extends AbstractUnitTest
 	public function testSanitizer()
 	{
 		$sanitizer = new TypeInt;
-		
+
 		$this->assertEquals(10, $sanitizer->sanitize("10"));
 		$this->assertEquals(10, $sanitizer->sanitize(10));
 		$this->assertEquals(null, $sanitizer->sanitize("wrong integer"));
