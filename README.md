@@ -167,6 +167,6 @@ Output of the previous call
 
 **TODO**
 
- - Add unit tests
- - Create a new template method to define **required** fields.
- - Modularize a bit more the Strategy selector to allow extending the library with new types of data.
+ - [] Add unit tests
+ - [] Create a new template method to define **required** fields.
+ - [] Modularize a bit more the Strategy selector to allow extending the library with new types of data.
