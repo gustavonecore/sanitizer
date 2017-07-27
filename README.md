@@ -7,6 +7,10 @@ This is a library to sanitize your input from any source, using a predefined tem
 **Why another sanitizer?**
 Well, this is because I really want to maintain my toolset pretty small, and not depending on big libraries/frameworks. 
 
+### Requirements
+
+- PHP >= v7.0
+
 ### Install it with composer
 
     composer require gustavonecore/php-sanitizer
