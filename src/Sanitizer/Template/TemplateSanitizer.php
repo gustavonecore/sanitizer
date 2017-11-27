@@ -10,6 +10,7 @@ use Gcore\Sanitizer\Type\TypeEmail;
 use Gcore\Sanitizer\Type\TypeInterface;
 use Gcore\Sanitizer\Type\TypeInt;
 use Gcore\Sanitizer\Type\TypeString;
+use Gcore\Sanitizer\Type\TypeFixedValues;
 use InvalidArgumentException;
 use LogicException;
 use RuntimeException;
@@ -75,24 +76,31 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 		}
 		else if (is_array($rule))
 		{
-			$isList = strpos($fieldName, '[]') > 0;
-
-			$sanitizers = array_map(function($ruleItem)
+			if (self::isAssoc($rule))
 			{
-				return $this->getType($ruleItem);
-			}, $rule);
+				$isList = strpos($fieldName, '[]') > 0;
 
-			$cleanSanitizers = [];
+				$sanitizers = array_map(function($ruleItem)
+				{
+					return $this->getType($ruleItem);
+				}, $rule);
 
-			foreach ($sanitizers as $key => $value)
-			{
-				$key = str_replace('!', '', $key);
-				$key = str_replace('[]', '', $key);
-				$cleanSanitizers[$key] = $value;
+				$cleanSanitizers = [];
+
+				foreach ($sanitizers as $key => $value)
+				{
+					$key = str_replace('!', '', $key);
+					$key = str_replace('[]', '', $key);
+					$cleanSanitizers[$key] = $value;
+				}
+
+				$type = new TypeArrayMap($cleanSanitizers);
+				$type = $isList ? new TypeArray($type) : $type;
 			}
-
-			$type = new TypeArrayMap($cleanSanitizers);
-			$type = $isList ? new TypeArray($type) : $type;
+			else
+			{
+				$type = new TypeFixedValues($rule);
+			}
 		}
 
 		if ($type === null)
@@ -177,5 +185,17 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 		}
 
 		return $missingFields;
+	}
+
+	/**
+	 * Check if the given array it's associative
+	 *
+	 * @param array $arr
+	 * @return bool
+	 */
+	private static function isAssoc(array $arr) : bool
+	{
+		if (array() === $arr) return false;
+		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 }
