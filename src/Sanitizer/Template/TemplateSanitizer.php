@@ -11,6 +11,8 @@ use Gcore\Sanitizer\Type\TypeInterface;
 use Gcore\Sanitizer\Type\TypeInt;
 use Gcore\Sanitizer\Type\TypeString;
 use InvalidArgumentException;
+use LogicException;
+use RuntimeException;
 
 /**
  * Class to sanitize array data
@@ -28,6 +30,13 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 	protected $templateSanitizer;
 
 	/**
+	 * Output sanitized data
+	 *
+	 * @var array
+	 */
+	protected $output;
+
+	/**
 	 * Constructs the Template
 	 * @param  array  $template   Template
 	 */
@@ -35,6 +44,7 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 	{
 		$this->template = $template;
 		$this->templateSanitizer = $this->initSanitizers($template);
+		$this->output = null;
 	}
 
 	/**
@@ -60,7 +70,7 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 				case 'email' : $type = new TypeEmail; break;
 				default: throw new InvalidArgumentException('Invalid type ' . $rule);
 			}
-			
+
 			$type = $isList ? new TypeArray($type) : $type;
 		}
 		else if (is_array($rule))
@@ -127,6 +137,45 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 			$output[$key] = array_key_exists($key, $values) ? $sanitizer->sanitize($values[$key]) : null;
 		}
 
+		$this->output = $output;
+
 		return $output;
+	}
+
+	/**
+	 * Get the sanitized data
+	 *
+	 * @return array
+	 */
+	public function getOutput() : array
+	{
+		return $this->output;
+	}
+
+	/**
+	 * Iterate over the sanitized data for invalid values
+	 * TODO: improve this method to allow nested fields like parent.child.chil1.child2
+	 *
+	 * @param array $fields  List of names to check
+	 * @return array
+	 */
+	public function requireFields(array $fields) : array
+	{
+		if ($this->output === null)
+		{
+			throw new LogicException('You need to sanitize your data first before accesing the output');
+		}
+
+		$missingFields = [];
+
+		foreach ($fields as $field)
+		{
+			if (!isset($this->output[$field]) || $this->output[$field] === null)
+			{
+				throw new RuntimeException('Required field ' . $field . ' was not fullfilled.');
+			}
+		}
+
+		return $missingFields;
 	}
 }

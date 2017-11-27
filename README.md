@@ -172,5 +172,6 @@ Output of the previous call
 **TODO**
 
  - [x] Add unit tests. #1 (In progress)
- - [ ] Create a new template method to define **required** fields.
+ - [x] Create a new template method to define **required** fields.
+   - [ ] Improve this method to allow nested fields
  - [ ] Modularize a bit more the Strategy selector to allow extending the library with new types of data.

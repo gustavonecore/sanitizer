@@ -21,6 +21,7 @@ $filter = new Gcore\Sanitizer\Template\TemplateSanitizer([
 			'users' => 'string[]'
 		],
 	],
+	'not_filled' => 'int',
 ]);
 
 // This will be your inut body from an user
@@ -56,5 +57,8 @@ $input = [
 
 // All your data is clean now! awesome!
 $cleanOutput = $filter->sanitize($input);
+
+// Uncomment this if you want to test the requireFields feature
+//$filter->requireFields(['first_name', 'not_filled']);
 
 print_r($cleanOutput);
