@@ -11,6 +11,7 @@ use Gcore\Sanitizer\Type\TypeInterface;
 use Gcore\Sanitizer\Type\TypeInt;
 use Gcore\Sanitizer\Type\TypeString;
 use Gcore\Sanitizer\Type\TypeFixedValues;
+use Gcore\Sanitizer\Template\RequiredFieldsException;
 use InvalidArgumentException;
 use LogicException;
 use RuntimeException;
@@ -36,6 +37,11 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 	 * @var array
 	 */
 	protected $output;
+
+	/**
+	 * @var array  Required fields
+	 */
+	protected $requiredFields = [];
 
 	/**
 	 * Constructs the Template
@@ -120,6 +126,11 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 
 		foreach ($template as $fieldName => $rule)
 		{
+			if (substr($rule, -1) === '!')
+			{
+				$this->requiredFields[$fieldName] = true;
+			}
+
 			$fieldNameKey = str_replace('!', '', $fieldName);
 			$fieldNameKey = str_replace('[]', '', $fieldNameKey);
 			$templateSanitizer[$fieldNameKey] = $this->getType($rule, $fieldName);
@@ -139,10 +150,21 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 		}
 
 		$output = [];
+		$errors = [];
 
 		foreach ($this->templateSanitizer as $key => $sanitizer)
 		{
 			$output[$key] = array_key_exists($key, $values) ? $sanitizer->sanitize($values[$key]) : null;
+
+			if ($output[$key] === null && array_key_exists($key, $this->requiredFields))
+			{
+				$errors[$key] = '[' . $key . '] is required';
+			}
+		}
+
+		if ($errors !== [])
+		{
+			throw new RequiredFieldsException($errors);
 		}
 
 		$this->output = $output;
