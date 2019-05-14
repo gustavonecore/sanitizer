@@ -44,6 +44,22 @@ First, you must define your template
     ]);
 
 
+**Required fields**
+You can force the sanitization process to require fields, you just need to include a `!` at the end of the rule, e.g:
+
+
+
+    $filter = new Gcore\Sanitizer\Template\TemplateSanitizer([
+    	'email' => 'email!',
+    	'phone' => 'string!',
+    	'first_name' => 'string',
+    ]);
+
+
+
+**If required fields is invalid**
+If the input have required fileds with invalid data (null) the library will throw a `Gcore\Sanitizer\Template\RequiredFieldsException`
+
 **Sanitize!**
 After that, you are good to sanitize any input
 
@@ -172,6 +188,7 @@ Output of the previous call
 **TODO**
 
  - [x] Add unit tests. #1 (In progress)
+ - [x] Add required fields.
  - [x] Create a new template method to define **required** fields.
    - [ ] Improve this method to allow nested fields
  - [ ] Modularize a bit more the Strategy selector to allow extending the library with new types of data.
