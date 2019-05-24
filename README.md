@@ -5,7 +5,7 @@ GCore Sanitizer
 This is a library to sanitize your input from any source, using a predefined template of native types.
 
 **Why another sanitizer?**
-Well, this is because I really want to maintain my toolset pretty small, and not depending on big libraries/frameworks. 
+Well, this is because I really want to maintain my toolset pretty small, and not depending on big libraries/frameworks.
 
 ### Requirements
 
@@ -20,7 +20,7 @@ Well, this is because I really want to maintain my toolset pretty small, and not
 **Template definition**
 First, you must define your template
 
-
+```php
     $filter = new Gcore\Sanitizer\Template\TemplateSanitizer([
     	'first_name' => 'string',
     	'dob' => 'int',
@@ -42,20 +42,18 @@ First, you must define your template
     		],
     	],
     ]);
-
+```
 
 **Required fields**
 You can force the sanitization process to require fields, you just need to include a `!` at the end of the rule, e.g:
 
-
-
+```php
     $filter = new Gcore\Sanitizer\Template\TemplateSanitizer([
     	'email' => 'email!',
     	'phone' => 'string!',
     	'first_name' => 'string',
     ]);
-
-
+```
 
 **If required fields is invalid**
 If the input have required fileds with invalid data (null) the library will throw a `Gcore\Sanitizer\Template\RequiredFieldsException`
@@ -63,6 +61,7 @@ If the input have required fileds with invalid data (null) the library will thro
 **Sanitize!**
 After that, you are good to sanitize any input
 
+```php
     // This will be your inut body from an user
     $input = [
     	'first_name' => 'Gustavo',
@@ -93,12 +92,12 @@ After that, you are good to sanitize any input
     		],
     	]
     ];
-    
+
     // All your data is clean now! awesome!
     $cleanOutput = $filter->sanitize($input);
-    
-    print_r($cleanOutput);
 
+    print_r($cleanOutput);
+```
 
 
 
@@ -106,7 +105,8 @@ After that, you are good to sanitize any input
 
 Output of the previous call
 
-    php examples/index.php 
+```php
+    php examples/index.php
     Array
     (
         [first_name] => Gustavo
@@ -119,10 +119,10 @@ Output of the previous call
                 [3] => 4
                 [4] => 5
             )
-    
-        [test] => 
+
+        [test] =>
         [email] => gustavo.uach@gmail.com
-        [email_wrong] => 
+        [email_wrong] =>
         [double] => 7876
         [boolean] => 1
         [datetime] => DateTimeImmutable Object
@@ -131,7 +131,7 @@ Output of the previous call
                 [timezone_type] => 3
                 [timezone] => America/Santiago
             )
-    
+
         [persons] => Array
             (
                 [0] => Array
@@ -144,7 +144,7 @@ Output of the previous call
                                 [1] => bar
                                 [2] => text
                             )
-    
+
                         [commits] => Array
                             (
                                 [hash] => 2221321n3kj12n3kj12n32j1
@@ -154,30 +154,29 @@ Output of the previous call
                                         [0] => jhon
                                         [1] => doe
                                     )
-    
+
                             )
-    
+
                     )
-    
+
                 [1] => Array
                     (
                         [name] => albert
-                        [eyes] => 
+                        [eyes] =>
                         [address] => Array
                             (
                                 [0] => a
                                 [1] => b
                                 [2] => 1
                             )
-    
-                        [commits] => 
+
+                        [commits] =>
                     )
-    
+
             )
-    
+
     )
-
-
+```
 
 **Notes**
 
@@ -190,5 +189,5 @@ Output of the previous call
  - [x] Add unit tests. #1 (In progress)
  - [x] Add required fields.
  - [x] Create a new template method to define **required** fields.
-   - [ ] Improve this method to allow nested fields
+   - [x] Improve this method to allow nested fields
  - [ ] Modularize a bit more the Strategy selector to allow extending the library with new types of data.
