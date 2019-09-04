@@ -126,7 +126,7 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 
 		foreach ($template as $fieldName => $rule)
 		{
-			if (substr($rule, -1) === '!')
+			if (is_string($rule) && substr($rule, -1) === '!')
 			{
 				$this->requiredFields[$fieldName] = true;
 			}
