@@ -24,10 +24,10 @@ class TypeArray implements TypeInterface
 	 */
 	public function sanitize($values) : array
 	{
-		return array_map(function($value)
+		return is_array($values) ? array_map(function($value)
 		{
 			return $this->typeItem->sanitize($value);
-		}, $values);
+		}, $values) : [];
 	}
 
 	public function getTypeItem() : TypeInterface
