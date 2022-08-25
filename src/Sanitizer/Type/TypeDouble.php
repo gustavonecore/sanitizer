@@ -23,11 +23,9 @@ class TypeDouble implements TypeInterface
 		}
 		else if (is_string($value))
 		{
-			$test = preg_replace( '/[^0-9]/', '', $value);
-
-			if ($test !== '' && is_double(doubleval($test)))
+			if (is_numeric($value) && is_double(doubleval($value)))
 			{
-				return doubleval($test);
+				return doubleval($value);
 			}
 		}
 
