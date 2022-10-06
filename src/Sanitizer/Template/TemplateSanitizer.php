@@ -12,6 +12,7 @@ use Gcore\Sanitizer\Type\TypeInt;
 use Gcore\Sanitizer\Type\TypeString;
 use Gcore\Sanitizer\Type\TypeFixedValues;
 use Gcore\Sanitizer\Template\RequiredFieldsException;
+use Gcore\Sanitizer\Type\TypeRegexp;
 use InvalidArgumentException;
 use LogicException;
 use RuntimeException;
@@ -75,7 +76,7 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 				case 'datetime' : $type = new TypeDatetime; break;
 				case 'double' : $type = new TypeDouble; break;
 				case 'email' : $type = new TypeEmail; break;
-				default: throw new InvalidArgumentException('Invalid type ' . $rule);
+				default: $type = $this->getCustomSanitizer($rule);
 			}
 
 			$type = $isList ? new TypeArray($type) : $type;
@@ -219,5 +220,13 @@ class TemplateSanitizer implements TypeInterface, TemplateInterface
 	{
 		if (array() === $arr) return false;
 		return array_keys($arr) !== range(0, count($arr) - 1);
+	}
+
+	private function getCustomSanitizer(string $rule) {
+		if (strpos($rule, 'regexp') > 0) {
+			return new TypeRegexp;
+		}
+
+		throw new InvalidArgumentException('Invalid type ' . $rule);
 	}
 }
