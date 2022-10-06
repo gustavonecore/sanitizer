@@ -31,6 +31,7 @@ First, you must define your template
     	'double' => 'double',
     	'boolean' => 'bool',
     	'datetime' => 'datetime',
+        'validation_code' => 'regexp[^[0-9]{1,6}$]',
     	"persons[]" => [
     		'name' => 'string',
     		'eyes' => 'int',
@@ -73,6 +74,7 @@ After that, you are good to sanitize any input
     	'double' => '7876',
     	'boolean' => true,
     	'datetime' => '2017-11-11 13:50:10',
+        'validation_code' => 123456,
     	'persons' => [
     		[
     			'name' => 'jhon',
@@ -131,6 +133,8 @@ Output of the previous call
                 [timezone_type] => 3
                 [timezone] => America/Santiago
             )
+
+        [validation_code] => 123456
 
         [persons] => Array
             (
