@@ -12,11 +12,16 @@ class TypeString implements TypeInterface
 	 */
 	public function sanitize($value)
 	{
-		if (trim($value) === '')
-		{
+		if ($value === null) {
 			return null;
 		}
 
-		return strval($value);
+		$value = trim((string) $value);
+
+		if ($value === '') {
+			return null;
+		}
+
+		return $value;
 	}
 }
